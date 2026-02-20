@@ -1148,7 +1148,6 @@ local quitMessages = {
     "couldn't handle the heat",
     'disconnected from reality \u{1f914}',
     'couldn't fw u \u{1f480}',
-    'Made with care baby..',
 }
 
 Players.PlayerRemoving:Connect(function(plr)
