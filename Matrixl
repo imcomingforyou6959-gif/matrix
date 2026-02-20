@@ -1147,7 +1147,8 @@ local quitMessages = {
     'Target alt+F4 detected \u{1f480}',
     "couldn't handle the heat",
     'disconnected from reality \u{1f914}',
-    'took the L and left \u{1f480}',
+    'couldn't fw u \u{1f480}',
+    'Made with care baby..',
 }
 
 Players.PlayerRemoving:Connect(function(plr)
