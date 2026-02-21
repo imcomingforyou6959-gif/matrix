@@ -42,6 +42,7 @@ local lockedTarget = nil
 local predictionMultiplier = Flags.PredictValue
 local targetlist = {}
 local selectedPlayerName = nil
+local Client = LocalPlayer
 
 Flags.multiTargetEnabled = false
 Flags.StickyAimEnabled = true
@@ -761,7 +762,7 @@ local function getAmmoCount(gunName)
     return 0
 end
 local function buyAmmo(gunName)
-    local ShopFolder = Workspace:WaitForChild('Ignored'):WaitForChild('Shop')
+    local ShopFolder = workspace:WaitForChild('Ignored'):WaitForChild('Shop')
     local AmmoMap = {
         ['[AUG]'] = '90 [AUG Ammo] - $90',
         ['[LMG]'] = '200 [LMG Ammo] - $338',
@@ -1348,7 +1349,7 @@ RunService.Heartbeat:Connect(function()
     end
 
     local hrp = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild('HumanoidRootPart')
-    local SavedPosition = hrp.CFrame
+    SavedPosition = hrp.CFrame
 
     if lockedTarget and lockedTarget.Character then
         local targetPart = lockedTarget.Character:FindFirstChild(Flags.TargetHitPart)
@@ -3747,8 +3748,8 @@ local AutoBuySection = MiscPage:Section({
     Name = 'Auto Buy',
     Side = 2,
 })
-local Workspace = game:GetService('Workspace')
-local ShopFolder = Workspace:WaitForChild('Ignored'):WaitForChild('Shop')
+local workspace = game:GetService('workspace')
+local ShopFolder = workspace:WaitForChild('Ignored'):WaitForChild('Shop')
 
 Flags.SelectedItems = {}
 
@@ -3901,7 +3902,7 @@ buyButton:Add('Buy Ammo', BuyAmmo)
 LocalPlayer.CharacterAdded:Connect(function()
     task.wait(1)
 
-    ShopFolder = Workspace:WaitForChild('Ignored'):WaitForChild('Shop')
+    ShopFolder = workspace:WaitForChild('Ignored'):WaitForChild('Shop')
 end)
 
 Flags.AntiVoidEnabled = true
@@ -4501,9 +4502,10 @@ coroutine.wrap(function()
             applyCustomAnimations(LocalPlayer.Character)
         end,
     })
-    AnimationSection:Toggle({
+        AnimationSection:Toggle({
         Name = 'Keep On Death',
         Flag = 'KeepOnDeath',
         Default = false,
     })
-end)()
+end)  
+
