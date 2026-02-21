@@ -43,6 +43,7 @@ local predictionMultiplier = Flags.PredictValue
 local targetlist = {}
 local selectedPlayerName = nil
 local Client = LocalPlayer
+local workspace = game:GetService("workspace")
 
 Flags.multiTargetEnabled = false
 Flags.StickyAimEnabled = true
@@ -752,15 +753,13 @@ local function getCurrentGun()
     return nil
 end
 local function getAmmoCount(gunName)
-    local inventory = LocalPlayer.DataFolder.Inventory
+    if not LocalPlayer:FindFirstChild('DataFolder') then return 0 end
+    local inventory = LocalPlayer.DataFolder:FindFirstChild('Inventory')
+    if not inventory then return 0 end
     local ammo = inventory:FindFirstChild(gunName)
-
-    if ammo then
-        return tonumber(ammo.Value) or 0
-    end
-
-    return 0
+    return ammo and tonumber(ammo.Value) or 0
 end
+
 local function buyAmmo(gunName)
     local ShopFolder = workspace:WaitForChild('Ignored'):WaitForChild('Shop')
     local AmmoMap = {
@@ -769,7 +768,8 @@ local function buyAmmo(gunName)
         ['[Rifle]'] = '5 [Rifle Ammo] - $281',
     }
     local hrp = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild('HumanoidRootPart')
-    local Saveddd = hrp.CFrame
+if not hrp then return end
+local Saveddd = hrp.CFrame
     local ammoItemName = AmmoMap[gunName]
 
     if not ammoItemName then
@@ -4502,10 +4502,9 @@ coroutine.wrap(function()
             applyCustomAnimations(LocalPlayer.Character)
         end,
     })
-        AnimationSection:Toggle({
+    AnimationSection:Toggle({
         Name = 'Keep On Death',
         Flag = 'KeepOnDeath',
         Default = false,
     })
-end)  
-
+end)
